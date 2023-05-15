@@ -1,0 +1,142 @@
+<html>
+  <head>
+    <link rel="stylesheet" href="search.css" />
+    <script src="index.js"></script>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css"
+      integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
+      crossorigin="anonymous"
+    />
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  </head>
+  <body>
+    <div class="container-box">
+      <h1 class="text-center mb-4">Harmful Substances Detector</h1>
+      <div class="mb-5 bg-white rounded" id="container-box">
+        <form
+          class="form-inline justify-content-center"
+          action="/product"
+          method="post"
+          id="product-form"
+        >
+          <input
+            class="form-control mr-sm-2"
+            type="text"
+            placeholder="Enter the Product Name"
+            id="product-box"
+          />
+          <button class="btn btn-outline-success my-2 my-sm-0" type="submit">
+            Search
+          </button>
+        </form>
+        <div
+          class="shadow-lg p-3 mb-5 bg-white rounded"
+          id="harmful-substances"
+        >
+          Harmful Substances Will Be Mentioned here , if there are no harmful
+          substances it will display no harmful substances
+        </div>
+      </div>
+    </div>
+    <div class="glowing-box">
+      <div class="glowing">
+        <span style="--i: 1"></span>
+        <span style="--i: 2"></span>
+        <span style="--i: 3"></span>
+      </div>
+
+      <div class="glowing">
+        <span style="--i: 1"></span>
+        <span style="--i: 2"></span>
+        <span style="--i: 3"></span>
+      </div>
+
+      <div class="glowing">
+        <span style="--i: 1"></span>
+        <span style="--i: 2"></span>
+        <span style="--i: 3"></span>
+      </div>
+
+      <div class="glowing">
+        <span style="--i: 1"></span>
+        <span style="--i: 2"></span>
+        <span style="--i: 3"></span>
+      </div>
+
+      <div class="glowing">
+        <span style="--i: 1"></span>
+        <span style="--i: 2"></span>
+        <span style="--i: 3"></span>
+      </div>
+
+      <div class="glowing">
+        <span style="--i: 1"></span>
+        <span style="--i: 2"></span>
+        <span style="--i: 3"></span>
+      </div>
+
+      <div class="glowing">
+        <span style="--i: 1"></span>
+        <span style="--i: 2"></span>
+        <span style="--i: 3"></span>
+      </div>
+
+      <div class="glowing">
+        <span style="--i: 1"></span>
+        <span style="--i: 2"></span>
+        <span style="--i: 3"></span>
+      </div>
+
+      <div class="glowing">
+        <span style="--i: 1"></span>
+        <span style="--i: 2"></span>
+        <span style="--i: 3"></span>
+      </div>
+
+      <div class="glowing">
+        <span style="--i: 1"></span>
+        <span style="--i: 2"></span>
+        <span style="--i: 3"></span>
+      </div>
+
+      <div class="glowing">
+        <span style="--i: 1"></span>
+        <span style="--i: 2"></span>
+        <span style="--i: 3"></span>
+      </div>
+    </div>
+    <script>
+      $(document).ready(function () {
+        $("#product-form").submit(function (event) {
+          event.preventDefault();
+          const productName = $("#product-box").val();
+          $.post("/product", { productName: productName }, function (data) {
+            if (data.error) {
+              alert(data.error);
+            } else {
+              const harmfulSubstances = data.harmfulSubstances;
+              const harmfulSubstancesDiv = $("#harmful-substances");
+              harmfulSubstancesDiv.empty();
+              if (harmfulSubstances.length > 0) {
+                if (harmfulSubstances.length > 1) {
+                  harmfulSubstances.forEach(function (substance) {
+                    const newDiv = $("<div>").text(substance);
+                    harmfulSubstancesDiv.append(newDiv);
+                  });
+                } else {
+                  const newDiv = $("<div>").text(harmfulSubstances[0]);
+                  harmfulSubstancesDiv.append(newDiv);
+                }
+                harmfulSubstancesDiv.css("color", "red");
+              } else {
+                harmfulSubstancesDiv.text("No harmful substances found.");
+                harmfulSubstancesDiv.css("color", "green");
+              }
+            }
+          });
+        });
+      });
+    </script>
+  </body>
+</html>
